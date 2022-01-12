@@ -1,7 +1,12 @@
 // database.providers.tsJS
 
 import { UserEntity } from 'src/entity/users.entity';
+import { NoteEntity } from 'src/entity/notes.entity';
 import { createConnection } from 'typeorm';
+import { NotebookEntity } from 'src/entity/notebooks.entity';
+import { ShareEntity } from 'src/entity/share.entity';
+import { TagEntity } from 'src/entity/tags.entity';
+import { MappingNoteTagEntity } from 'src/entity/mapping_note_tag.entity';
 
 export const databaseProviders = [
   {
@@ -14,7 +19,12 @@ export const databaseProviders = [
       password: 'Password123!',
       database: 'final_project',
       entities: [
-          UserEntity
+          UserEntity,
+          NoteEntity,
+          NotebookEntity,
+          ShareEntity,
+          TagEntity,
+          MappingNoteTagEntity,
       ],
       synchronize: true,
     }),

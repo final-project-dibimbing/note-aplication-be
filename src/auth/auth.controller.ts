@@ -12,4 +12,9 @@ export class AuthController {
   async signUp(@Body() data: SignUpReq) {
     return await this.service.signUp(data);
   }
+
+  @Post('sign-in')
+  async signIn(@Body() data : any){
+    return await this.service.signIn(data);
+  }
 }
