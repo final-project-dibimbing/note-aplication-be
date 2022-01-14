@@ -18,7 +18,7 @@ export class LoginInteceptor implements NestInterceptor {
   constructor( @Inject("USER_REPOSITORY")
                private userRepository: Repository<UserEntity>) {}
 
-  public async validate(value: any) {
+  private async validate(value: any) {
     try {
       const find = await this.userRepository.findOne({
         where: {
