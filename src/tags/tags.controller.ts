@@ -22,7 +22,6 @@ export class TagsController {
   @ApiBearerAuth('token')
   @Post('add')
   async add(@Body() data: AddTagRequest, @Headers() header: any) {
-    // const { user } = header;
     return this.service.addTag(data, header.user.id);
   }
 

@@ -1,12 +1,12 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { check } from 'prettier';
+import { InjectRepository } from '@nestjs/typeorm';
 import { TagEntity } from 'src/entity/tags.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class TagsService {
   constructor(
-    @Inject('TAG_REPOSITORY')
+    @InjectRepository(TagEntity)
     private tagRepository: Repository<TagEntity>,
   ) {}
 
@@ -17,30 +17,29 @@ export class TagsService {
 
   public async updateTag(data: any, user_id) {
     data['update_at'] = new Date();
-    await this.checkData(data.id, user_id)
+    await this.checkData(data.id, user_id);
     return await this.tagRepository.update({ id: data.id }, data);
   }
 
-  public async deleteTag(id : number, user_id){
-    await this.checkData(id, user_id)
-    return await this.tagRepository.delete(id)
+  public async deleteTag(id: number, user_id) {
+    await this.checkData(id, user_id);
+    return await this.tagRepository.delete(id);
   }
 
-  private async checkData(id: number, user_id : string) {
+  private async checkData(id: number, user_id: string) {
     const data = await this.tagRepository.findOne({
       where: {
-        id
+        id,
       },
     });
 
-    if(!data){
-      throw new Error('Data tidak ditemukan !')
+    if (!data) {
+      throw new Error('Data tidak ditemukan !');
     } else {
-      console.log(data.user_id.toString(),user_id)
-      if(data.user_id.toString() !== user_id.toString()){
-        throw new UnauthorizedException
+      if (data.user_id.toString() !== user_id.toString()) {
+        throw new UnauthorizedException();
       }
     }
-    return true
+    return true;
   }
 }

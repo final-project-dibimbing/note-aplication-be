@@ -5,6 +5,9 @@ export class NotebookEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  user_id: number;
+
   @Column({ length: 225 })
   name: string;
 

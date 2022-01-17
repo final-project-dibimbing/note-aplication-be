@@ -11,7 +11,7 @@ export class AddNoteRequest {
   content: string;
 
   @ApiProperty()
-  tags: [];
+  tags: number[];
 }
 
 export class UpdateNoteRequest {

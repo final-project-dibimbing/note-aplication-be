@@ -26,7 +26,8 @@ export const databaseProviders = [
           TagEntity,
           MappingNoteTagEntity,
       ],
-      synchronize: true,
+      synchronize: false,
+      logging:true
     }),
   },
 ];

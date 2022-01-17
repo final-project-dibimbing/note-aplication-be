@@ -7,6 +7,7 @@ import {
   NotFoundException,
   UnauthorizedException
 } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
 const bcrypt = require("bcryptjs");
 
 import { Observable } from "rxjs";
@@ -15,7 +16,7 @@ import { UserEntity } from "../../entity/users.entity";
 
 @Injectable()
 export class LoginInteceptor implements NestInterceptor {
-  constructor( @Inject("USER_REPOSITORY")
+  constructor( @InjectRepository(UserEntity)
                private userRepository: Repository<UserEntity>) {}
 
   private async validate(value: any) {

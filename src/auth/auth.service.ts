@@ -3,6 +3,7 @@ import { UserEntity } from 'src/entity/users.entity';
 import { Repository } from 'typeorm';
 import { SignUpReq } from './request/sign-up.request';
 import { SignInRequest } from './request/sign-in.request';
+import { InjectRepository } from '@nestjs/typeorm';
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,7 +11,7 @@ const jwt = require('jsonwebtoken');
 @Injectable()
 export class AuthService {
   constructor(
-    @Inject('USER_REPOSITORY')
+    @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
   ) {}
 
