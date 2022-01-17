@@ -23,6 +23,9 @@ export class UpdateNoteRequest {
 
   @ApiProperty()
   content: string;
+
+  @ApiProperty()
+  tags: number[];
 }
 
 export class DeleteNoteRequest {}

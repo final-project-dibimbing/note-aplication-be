@@ -11,7 +11,6 @@ export class NotebooksService {
     @InjectRepository(NotebookEntity)
     private notebookRepository: Repository<NotebookEntity>,
     private conection: Connection,
-    private noteService: NotesService,
   ) {}
 
   public async addNotebook(data: any, user_id: number) {
@@ -54,8 +53,4 @@ export class NotebooksService {
     }
     return true;
   }
-
-  // private async deleteNotes(notebook_id: number){
-  //   await this.noteService.softDeleteNoteByNotebookId(notebook_id)
-  // }
 }
