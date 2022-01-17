@@ -1,8 +1,22 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
-export class AddRequest{
+export class AddNoteRequest {
   @ApiProperty()
-  notebook_id : number
+  notebook_id: number;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  content: string;
+
+  @ApiProperty()
+  tags: [];
+}
+
+export class UpdateNoteRequest {
+  @ApiProperty()
+  id: number;
 
   @ApiProperty()
   title: string;
@@ -11,22 +25,6 @@ export class AddRequest{
   content: string;
 }
 
-export class UpdateRequest{
-    @ApiProperty()
-    id : number
-  
-    @ApiProperty()
-    title: string;
-  
-    @ApiProperty()
-    content: string;
-}
+export class DeleteNoteRequest {}
 
-export class DeleteRequest{
-
-}
-
-export class getRequest{
-    
-}
-
+export class GetNoteRequest {}

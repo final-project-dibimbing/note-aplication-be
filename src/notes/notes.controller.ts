@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Post, Put, Query } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AddRequest, UpdateRequest } from './request/index.request';
+import { AddNoteRequest, UpdateNoteRequest } from './request/index.request';
 
 @ApiTags('Notes')
 @Controller('notes')
@@ -8,12 +8,12 @@ export class NotesController {
   constructor() {}
 
   @Post('add')
-  async add(@Body() data: AddRequest) {
+  async add(@Body() data: AddNoteRequest) {
     return true
   }
 
   @Put('update')
-  async update(@Body() data : UpdateRequest){
+  async update(@Body() data : UpdateNoteRequest){
       return true
   }
 
