@@ -56,6 +56,18 @@ export class NotesService {
     return true;
   }
 
+  public async deleteNote(id: number, user_id: number) {
+    this.connection.transaction(async (manager) => {
+      await manager
+        .getRepository(MappingNoteTagEntity)
+        .update({ note_id: id }, { delete_at: new Date() });
+      await manager
+        .getRepository(NoteEntity)
+        .update({ id: id }, { delete_at: new Date() });
+    });
+    return true
+  }
+
   public async softDeleteNoteByNotebookId(notebook_id: number) {
     console.log('softDeleteNoteByNotebookId Sudah berhasil masuk');
     return await this.noteRepository.update(
