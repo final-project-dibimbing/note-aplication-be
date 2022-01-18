@@ -1,23 +1,29 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger';
 
-export class AddTagRequest{
+export class AddTagRequest {
   @ApiProperty()
-  title : string
+  title: string;
 }
 
-export class UpdateTagRequest{
-    @ApiProperty()
-    id : number
-  
-    @ApiProperty()
-    title: string;
+export class UpdateTagRequest {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  title: string;
 }
 
-export class DeleteTagRequest{
+export class DeleteTagRequest {}
 
+export class GetTagRequest {}
+
+export class SearchRequest {
+  @ApiProperty()
+  sort: string;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  count: boolean;
 }
-
-export class GetTagRequest{
-    
-}
-

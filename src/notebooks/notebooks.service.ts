@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { NotebookEntity } from 'src/entity/notebooks.entity';
 import { NoteEntity } from 'src/entity/notes.entity';
 import { NotesService } from 'src/notes/notes.service';
-import { Connection, Repository } from 'typeorm';
+import { Connection, Like, Repository } from 'typeorm';
 
 @Injectable()
 export class NotebooksService {
@@ -39,7 +39,34 @@ export class NotebooksService {
     return 'deleted';
   }
 
-  public getNotebook(data: any, user_id: number) {}
+  public async getNotebook(user_id: number) {
+    return await this.conection.getRepository(NotebookEntity).find({ user_id });
+  }
+
+  public async searchNotebook(data: any, user_id: number) {
+    const { sort } = data;
+    let queryOrder = {};
+    let whereOption = {
+      user_id,
+      delete_at : null,
+    }
+    if(data.name){
+      whereOption['name'] = Like(`%${data.name}%`)
+    }
+    if (sort.name) {
+      queryOrder['name'] = sort.name.toUpperCase();
+    }
+    if (sort.create_at) {
+      queryOrder['create_at'] = sort.create_at.toUpperCase();
+    }
+    if (sort.update_at) {
+      queryOrder['update_at'] = sort.update_at.toUpperCase();
+    }
+    return await this.conection.getRepository(NotebookEntity).find({
+      where: whereOption,
+      order: queryOrder,
+    });
+  }
 
   private async checkData(id: number, user_id: number) {
     const data = await this.notebookRepository.findOne({ id: id });
