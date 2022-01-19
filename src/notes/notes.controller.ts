@@ -7,12 +7,16 @@ import {
   Query,
   UseGuards,
   Headers,
+  Get,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MustGuard } from 'src/middleware/guard/must.guard';
+import { RespSuccessInteceptor } from 'src/middleware/interceptor/resp-success.inteceptor';
 import { NotesService } from './notes.service';
-import { AddNoteRequest, UpdateNoteRequest } from './request/index.request';
+import { AddNoteRequest, SearchNoteRequest, UpdateNoteRequest } from './request/index.request';
 
+@UseInterceptors(RespSuccessInteceptor)
 @UseGuards(MustGuard)
 @ApiBearerAuth('token')
 @ApiTags('Notes')
@@ -33,11 +37,16 @@ export class NotesController {
   @Delete('delete')
   @ApiQuery({ name: 'id' })
   async delete(@Query('id') id: number) {
-    return true;
+    return await this.service.deleteNote(id);
   }
 
-  @Post('get')
-  async get(@Body() data: any) {
-    return true;
+  @Get('')
+  async get(@Headers() header: any) {
+    return await this.service.getNote(header.user.id);
+  }
+
+  @Post('search')
+  async search(@Body() data: SearchNoteRequest, @Headers() header: any){
+    return await this.service.searchNote(data, header.user.id)
   }
 }

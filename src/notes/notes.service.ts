@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MappingNoteTagEntity } from 'src/entity/mapping_note_tag.entity';
 import { NoteEntity } from 'src/entity/notes.entity';
-import { Connection, In, Not, Repository } from 'typeorm';
+import { Connection, In, Like, Not, Repository } from 'typeorm';
 import { AddNoteRequest, UpdateNoteRequest } from './request/index.request';
 
 @Injectable()
@@ -56,7 +56,7 @@ export class NotesService {
     return true;
   }
 
-  public async deleteNote(id: number, user_id: number) {
+  public async deleteNote(id: number) {
     this.connection.transaction(async (manager) => {
       await manager
         .getRepository(MappingNoteTagEntity)
@@ -66,6 +66,38 @@ export class NotesService {
         .update({ id: id }, { delete_at: new Date() });
     });
     return true
+  }
+
+  public async getNote(user_id: number) {
+    return await this.connection.getRepository(NoteEntity).find({ user_id });
+  }
+
+  public async searchNote(data : any, user_id:number){
+    const { sort } = data;
+    let queryOrder = {};
+    let whereOption = {
+      user_id,
+      delete_at : null,
+    }
+    if(data.title){
+      whereOption['title'] = Like(`%${data.title}%`)
+    }
+    if(data.notebook_id){
+      whereOption['notebook_id'] = data.notebook_id
+    }
+    if (sort.name) {
+      queryOrder['title'] = sort.name.toUpperCase();
+    }
+    if (sort.create_at) {
+      queryOrder['create_at'] = sort.create_at.toUpperCase();
+    }
+    if (sort.update_at) {
+      queryOrder['update_at'] = sort.update_at.toUpperCase();
+    }
+    return await this.connection.getRepository(NoteEntity).find({
+      where: whereOption,
+      order: queryOrder,
+    });
   }
 
   public async softDeleteNoteByNotebookId(notebook_id: number) {
