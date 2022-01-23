@@ -1,6 +1,8 @@
 import { ApiProperty, getSchemaPath,  } from '@nestjs/swagger';
+import { IsOptional, IsString } from 'class-validator';
 
 export class AddNotebooksRequest {
+  @IsString()
   @ApiProperty()
   name: string;
 }
@@ -9,6 +11,8 @@ export class UpdateNotebooksRequest {
   @ApiProperty()
   id: number;
 
+@IsString()
+  @IsOptional()
   @ApiProperty()
   name: string;
 }

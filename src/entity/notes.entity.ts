@@ -11,13 +11,13 @@ export class NoteEntity {
   @Column()
   notebook_id: number;
 
-  @Column({ length: 225 })
+  @Column({ length: 225,default:'Untitled' })
   title: string;
 
   @Column({ type : 'text'})
   content: string;
 
-  @Column()
+  @Column({default:false})
   publish: boolean;
 
   @Column({ default: () => 'CURRENT_TIMESTAMP' ,

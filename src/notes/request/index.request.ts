@@ -1,15 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export class AddNoteRequest {
   @ApiProperty()
   notebook_id: number;
-
+@IsString()
   @ApiProperty()
   title: string;
-
+  @IsString()
   @ApiProperty()
   content: string;
-
+  @IsOptional()
+  @IsArray()
   @ApiProperty()
   tags: number[];
 }
