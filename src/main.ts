@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalFilters(new respErrorInteceptor());
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
+    .setTitle('Note Aplication')
     .setDescription('The cats API description')
     .addBearerAuth(
       {
@@ -26,7 +26,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
+    
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();
