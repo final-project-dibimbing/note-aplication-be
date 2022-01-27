@@ -57,7 +57,7 @@ export class NotesService {
   }
 
   public async deleteNote(id: number) {
-    this.connection.transaction(async (manager) => {
+    return this.connection.transaction(async (manager) => {
       await manager
         .getRepository(MappingNoteTagEntity)
         .update({ note_id: id }, { delete_at: new Date() });
@@ -65,11 +65,10 @@ export class NotesService {
         .getRepository(NoteEntity)
         .update({ id: id }, { delete_at: new Date() });
     });
-    return true
   }
 
   public async getNote(user_id: number) {
-    return await this.connection.getRepository(NoteEntity).find({ user_id });
+    return await this.connection.getRepository(NoteEntity).find({ user_id, delete_at : null });
   }
 
   public async searchNote(data : any, user_id:number){
