@@ -100,6 +100,10 @@ export class NotesService {
     });
   }
 
+  public async getDetailNote(id : number){
+    return await this.connection.getRepository(NoteEntity).findOne({ id });
+  }
+
   public async softDeleteNoteByNotebookId(notebook_id: number) {
     console.log('softDeleteNoteByNotebookId Sudah berhasil masuk');
     return await this.noteRepository.update(

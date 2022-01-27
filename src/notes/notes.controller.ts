@@ -49,4 +49,12 @@ export class NotesController {
   async search(@Body() data: SearchNoteRequest, @Headers() header: any){
     return await this.service.searchNote(data, header.user.id)
   }
+
+  @Get('detail')
+  @ApiQuery({ name: 'id' })
+  async detail(@Query('id') id: number) {
+    return await this.service.getDetailNote(id);
+  }
+
+
 }
