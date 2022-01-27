@@ -52,6 +52,12 @@ export class NotesService {
           .getRepository(MappingNoteTagEntity)
           .update({ note_id: data.id }, { delete_at: new Date() });
       }
+      await manager
+      .getRepository(NoteEntity)
+      .update({ id: data.id }, { 
+        title : data.title,
+        content : data.content
+       });
     });
     return true;
   }
